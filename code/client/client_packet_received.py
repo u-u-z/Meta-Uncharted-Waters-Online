@@ -1,6 +1,8 @@
 import pygame
 import random
 
+from pygame_gui.core.utility import create_resource_path
+
 # add relative directory to python_path
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
@@ -102,12 +104,12 @@ def your_role_data_and_others(self, message_obj):
         self.other_roles[role.name] = role
     print(other_roles)
 
-    # music    
-    port_name = hash_ports_meta_data[int(self.my_role.map) + 1]['name']    
+    # music
+    port_name = hash_ports_meta_data[int(self.my_role.map) + 1]['name']
     if port_name in ["Lisbon", "Seville", "London", "Marseille", "Amsterdam", "Venezia"]:
-        pygame.mixer.music.load('../../assets/sounds/music/port/' + port_name + '.mp3')
+        pygame.mixer.music.load(create_resource_path('assets/sounds/music/port/' + port_name + '.mp3'))
     else:
-        pygame.mixer.music.load('../../assets/sounds/music/port.ogg')
+        pygame.mixer.music.load(create_resource_path('assets/sounds/music/port.ogg'))
     pygame.mixer.music.play()
 
 # someone logged in
@@ -188,7 +190,7 @@ def roles_in_battle_map(self, message_obj):
     self.battle_timer.start(1)
 
     # music
-    pygame.mixer.music.load('../../assets/sounds/music/battle.ogg')
+    pygame.mixer.music.load(create_resource_path('assets/sounds/music/battle.ogg'))
     pygame.mixer.music.play(-1)
 
 def _check_battle_timer(self):

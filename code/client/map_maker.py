@@ -1,5 +1,6 @@
 import numpy as np
 from PIL import Image
+from pygame_gui.core.utility import create_resource_path
 
 # add relative directory to python_path
 import sys, os
@@ -41,7 +42,7 @@ class MapMaker():
         """piddle is a 2D-array(matrix)"""
         # get path
         port_index_with_leading_zeros = str(port_index).zfill(3)
-        map_path = f"../../assets/images/ports/PORTMAP.{port_index_with_leading_zeros}"
+        map_path = create_resource_path(f"assets/images/ports/PORTMAP.{port_index_with_leading_zeros}")
 
         # get piddle
         with open(map_path, 'rb') as file:
@@ -67,7 +68,7 @@ class MapMaker():
         else:
             file_name = time_of_day
 
-        img = Image.open(f"../../assets/images/ports/PORTCHIP.{port_chip_file_num}  {file_name}.png")
+        img = Image.open(create_resource_path(f"assets/images/ports/PORTCHIP.{port_chip_file_num}  {file_name}.png"))
         CHIP_TILES_COUNT = 16
 
         # cut to tiles
@@ -107,7 +108,7 @@ class MapMaker():
         # each time option
         for time_option in c.TIME_OF_DAY_OPTIONS:
             # read img
-            img = Image.open(f"../../assets/images/world_map/{time_option}.png")
+            img = Image.open(create_resource_path(f"assets/images/world_map/{time_option}.png"))
 
             # cut to tiles
             world_map_tiles = ['']
@@ -134,7 +135,7 @@ class MapMaker():
 
         # get piddle from txt
         num_array = ''
-        with open("../../assets/images/world_map/w_map_piddle_array.txt", 'r') as myfile:
+        with open(create_resource_path("assets/images/world_map/w_map_piddle_array.txt"), 'r') as myfile:
             num_array = myfile.read()
 
         nums_list = num_array.split(',')

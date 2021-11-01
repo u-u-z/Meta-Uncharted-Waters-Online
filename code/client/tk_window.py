@@ -2,6 +2,7 @@
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), 'code', 'common'))
 
+from pygame_gui.core.utility import create_resource_path
 
 import tkinter as tk
 from tkinter import Entry
@@ -15,7 +16,7 @@ class TkWindow:
         # root window
         self.root = tk.Tk()
         self.root.title("大航海时代2网络版")
-        self.root.iconbitmap('../../assets/images/game_icon/ship.ico')
+        self.root.iconbitmap(create_resource_path('assets/images/game_icon/ship.ico'))
         # frame for pygame
         self.embed = tk.Frame(self.root, width=c.WINDOW_WIDTH, height=c.WINDOW_HIGHT)  # creates embed frame for pygame window
         self.embed.focus_set()

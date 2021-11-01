@@ -5,7 +5,11 @@
         {
             "name": "MS Gothic",
             "size": "16",
-            "regular_path":"../../assets/siyuanheiti.ttf"
+            "regular_resource":
+            {
+                "package": "assets",
+                "resource": "siyuanheiti.ttf"
+            }
         }
     },
     "text_box":
@@ -14,7 +18,11 @@
         {
             "name": "MS Gothic",
             "size": "15",
-            "regular_path":"../../assets/siyuanheiti.ttf"
+            "regular_resource":
+            {
+                "package": "assets",
+                "resource": "siyuanheiti.ttf"
+            }
         }
     }
 }

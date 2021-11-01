@@ -1,5 +1,6 @@
 import pygame_gui
 from pygame_gui._constants import UI_WINDOW_CLOSE, UI_WINDOW_MOVED_TO_FRONT, UI_BUTTON_PRESSED
+from pygame_gui.core.utility import create_resource_path
 import pygame
 from twisted.internet import reactor, task
 import random
@@ -38,7 +39,7 @@ def test():
 def init_gui(self):
     """argument self is game"""
     # ui_manager and handlers
-    self.ui_manager = pygame_gui.UIManager((c.WINDOW_WIDTH, c.WINDOW_HIGHT), '../../assets/font_theme.json')
+    self.ui_manager = pygame_gui.UIManager((c.WINDOW_WIDTH, c.WINDOW_HIGHT), 'assets/font_theme.json')
     self.button_click_handler = ButtonClickHandler(self)
 
     # text entry
@@ -1009,7 +1010,7 @@ class MenuClickHandlerForCmds():
     def enter_building(self):
 
         # if at sea or already in building
-        if self.game.my_role.map == 'sea':            
+        if self.game.my_role.map == 'sea':
             return
         if self.game.my_role.is_in_building():
             return
@@ -1019,7 +1020,7 @@ class MenuClickHandlerForCmds():
         y = int(self.game.my_role.y/c.PIXELS_COVERED_EACH_MOVE)
 
         # get building id to board positions dict
-        
+
         map_id = int(self.game.my_role.map)
 
         if map_id >= 100:
@@ -1057,8 +1058,8 @@ class MenuClickHandlerForCmds():
 
                 # play music
                 building = id_2_building_type[k]
-                if building in ["bar", "palace", "church"]:                        
-                    pygame.mixer.music.load('../../assets/sounds/music/building/' + building + '.mp3')    
+                if building in ["bar", "palace", "church"]:
+                    pygame.mixer.music.load(create_resource_path('assets/sounds/music/building/' + building + '.mp3'))
                     pygame.mixer.music.play()
 
                 # trigger event?
@@ -1157,32 +1158,32 @@ class MenuClickHandlerForCmds():
                     region_name = hash_ports_meta_data['markets'][economy_id]
 
                 if port_name in ["Lisbon", "Seville", "London", "Marseille", "Amsterdam", "Venice"]:
-                    pygame.mixer.music.load('../../assets/sounds/music/port/' + port_name + '.mp3')
+                    pygame.mixer.music.load(create_resource_path('assets/sounds/music/port/' + port_name + '.mp3'))
                 else:
                     if region_name in ['North Africa', 'East Africa', 'West Africa']:
-                        pygame.mixer.music.load('../../assets/sounds/music/port/African Town.mp3')
+                        pygame.mixer.music.load(create_resource_path('assets/sounds/music/port/African Town.mp3'))
                     elif region_name in ['Middle East', 'Ottoman Empire']:
-                        pygame.mixer.music.load('../../assets/sounds/music/port/Middle Eastern Town.mp3')
+                        pygame.mixer.music.load(create_resource_path('assets/sounds/music/port/Middle Eastern Town.mp3'))
                     elif region_name == 'Northern Europe':
-                        pygame.mixer.music.load('../../assets/sounds/music/port/Northern Europe Town.mp3')
+                        pygame.mixer.music.load(create_resource_path('assets/sounds/music/port/Northern Europe Town.mp3'))
                     elif region_name == 'The Mediterranean' or region_name == 'Iberia':
-                        pygame.mixer.music.load('../../assets/sounds/music/port/Southern Europe Town.mp3')
+                        pygame.mixer.music.load(create_resource_path('assets/sounds/music/port/Southern Europe Town.mp3'))
                     elif region_name == 'Central America':
-                        pygame.mixer.music.load('../../assets/sounds/music/port/Central America Town.mp3')
+                        pygame.mixer.music.load(create_resource_path('assets/sounds/music/port/Central America Town.mp3'))
                     elif region_name == 'South America':
-                        pygame.mixer.music.load('../../assets/sounds/music/port/South America Town.mp3')
+                        pygame.mixer.music.load(create_resource_path('assets/sounds/music/port/South America Town.mp3'))
                     elif region_name in ['India']:
-                        pygame.mixer.music.load('../../assets/sounds/music/port/Indian Town.mp3')
+                        pygame.mixer.music.load(create_resource_path('assets/sounds/music/port/Indian Town.mp3'))
                     elif region_name in ['Southeast Asia']:
-                        pygame.mixer.music.load('../../assets/sounds/music/port/Southeast Asian Town.ogg')
+                        pygame.mixer.music.load(create_resource_path('assets/sounds/music/port/Southeast Asian Town.ogg'))
                     elif port_id == 94 or port_id == 95 or port_id == 97:
-                        pygame.mixer.music.load('../../assets/sounds/music/port/China Town.mp3')
+                        pygame.mixer.music.load(create_resource_path('assets/sounds/music/port/China Town.mp3'))
                     elif port_id == 98 or port_id == 99:
-                        pygame.mixer.music.load('../../assets/sounds/music/port/Japan Town.mp3')
+                        pygame.mixer.music.load(create_resource_path('assets/sounds/music/port/Japan Town.mp3'))
                     elif port_id == 119:
-                        pygame.mixer.music.load('../../assets/sounds/music/port/Oceania Town.mp3')
+                        pygame.mixer.music.load(create_resource_path('assets/sounds/music/port/Oceania Town.mp3'))
                     else:
-                        pygame.mixer.music.load('../../assets/sounds/music/port.ogg')
+                        pygame.mixer.music.load(create_resource_path('assets/sounds/music/port.ogg'))
                 pygame.mixer.music.play()
 
     def go_ashore(self):
@@ -1800,26 +1801,26 @@ class Harbor():
                 region_name = hash_ports_meta_data['markets'][economy_id]
 
             if region_name in ['East Africa','West Africa']:
-                pygame.mixer.music.load('../../assets/sounds/music/sea/African Sea.mp3')
+                pygame.mixer.music.load(create_resource_path('assets/sounds/music/sea/African Sea.mp3'))
             elif region_name in ['Middle East','Ottoman Empire']:
-                pygame.mixer.music.load('../../assets/sounds/music/sea/Mediterranean.mp3')
+                pygame.mixer.music.load(create_resource_path('assets/sounds/music/sea/Mediterranean.mp3'))
             elif region_name == 'Northern Europe':
-                pygame.mixer.music.load('../../assets/sounds/music/sea/North Sea.mp3')
+                pygame.mixer.music.load(create_resource_path('assets/sounds/music/sea/North Sea.mp3'))
             elif region_name in ['The Mediterranean', 'Iberia', 'North Africa']:
-                pygame.mixer.music.load('../../assets/sounds/music/sea/Mediterranean.mp3')
+                pygame.mixer.music.load(create_resource_path('assets/sounds/music/sea/Mediterranean.mp3'))
             elif region_name in ['Central America']:
-                pygame.mixer.music.load('../../assets/sounds/music/sea/American Sea.mp3')                
+                pygame.mixer.music.load(create_resource_path('assets/sounds/music/sea/American Sea.mp3'))
             elif region_name in ['South America']:
-                pygame.mixer.music.load('../../assets/sounds/music/sea/American Sea.mp3')
+                pygame.mixer.music.load(create_resource_path('assets/sounds/music/sea/American Sea.mp3'))
             elif region_name in ['India']:
-                pygame.mixer.music.load('../../assets/sounds/music/sea/Indian Ocean.mp3')         
+                pygame.mixer.music.load(create_resource_path('assets/sounds/music/sea/Indian Ocean.mp3'))
             elif region_name in ['Southeast Asia']:
-                pygame.mixer.music.load('../../assets/sounds/music/sea/Southeast Asian Sea.ogg')
+                pygame.mixer.music.load(create_resource_path('assets/sounds/music/sea/Southeast Asian Sea.ogg'))
             elif region_name in ['Far East']:
-                pygame.mixer.music.load('../../assets/sounds/music/sea/East Asia Sea.mp3')                
+                pygame.mixer.music.load(create_resource_path('assets/sounds/music/sea/East Asia Sea.mp3'))
             else:
                 file_name = random.choice(['sea', 'sea_1'])
-                pygame.mixer.music.load(f"../../assets/sounds/music/{file_name}.ogg")
+                pygame.mixer.music.load(create_resource_path(f"assets/sounds/music/{file_name}.ogg"))
             pygame.mixer.music.play(-1)
 
     def __pass_one_day_at_sea(self, game):
@@ -1943,7 +1944,7 @@ class Market():
         def buy(param):
             cargo_name = param[0]
             ship_id = param[1]
-            escape_twice(self.game)            
+            escape_twice(self.game)
 
             ship = self.game.my_role.ships[ship_id]
             max_count = ship.get_cargo_and_supply_capacity()
@@ -2882,7 +2883,7 @@ class Inn:
         # load img
         sketch = None
         try:
-            sketch = load_image(f"../../assets/images/port_sketches/{port_name}.png")
+            sketch = load_image(f"assets/images/port_sketches/{port_name}.png")
             sketch = pygame.transform.scale(sketch,
                                      (c.WINDOW_WIDTH - 50,
                                       c.WINDOW_HIGHT - 50))

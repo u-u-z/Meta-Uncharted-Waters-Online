@@ -2,6 +2,8 @@ from PIL import Image
 import pygame as pg
 import os
 
+from pygame_gui.core.utility import create_resource_path
+
 def make_white_bg_transparent(img_file):
     pic = Image.open(img_file)
 
@@ -32,6 +34,7 @@ def get_image(sheet, x, y, width, height, colorkey=(0,0,0), scale=1):
     return image
 
 def load_image(file_path, scale=1):
+    file_path = create_resource_path(file_path)
     img = pg.image.load(file_path).convert_alpha()
     rect = img.get_rect()
     img = pg.transform.scale(img,
@@ -43,6 +46,7 @@ def load_image(file_path, scale=1):
 
 def load_all_images(image_container, directory, accept=('.png', '.jpg', '.bmp', '.gif')):
     """loads all imgs in dir into image_contrainer"""
+    directory = create_resource_path(directory)
     for pic in os.listdir(directory):
         name, ext = os.path.splitext(pic)
         if ext.lower() in accept:
@@ -52,6 +56,7 @@ def load_all_images(image_container, directory, accept=('.png', '.jpg', '.bmp', 
 
 def load_all_sounds(sounds_container, directory, accept=('.ogg')):
     """loads all imgs in dir into image_contrainer"""
+    directory = create_resource_path(directory)
     for sound in os.listdir(directory):
         name, ext = os.path.splitext(sound)
         if ext.lower() in accept:

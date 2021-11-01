@@ -1,5 +1,6 @@
 import pygame
 import pygame_gui
+from pygame_gui.core.utility import create_resource_path
 from twisted.internet import reactor, task
 
 # add relative directory to python_path
@@ -107,14 +108,14 @@ class Game():
         folder_names = ['buildings', 'huds', 'player', 'figures',
                         'discoveries_and_items', 'in_battle', 'conditions']
         for f_name in folder_names:
-            load_all_images(self.images, f"../../assets/images/{f_name}")
+            load_all_images(self.images, f"assets/images/{f_name}")
         # ships
         self.images['ships'] = {}
-        load_all_images(self.images['ships'], "../../assets/images/ships")
+        load_all_images(self.images['ships'], "assets/images/ships")
         # ship in battle
         self.images['ship_in_battle'] = {}
         load_all_images(self.images['ship_in_battle'],
-                        "../../assets/images/ship_in_battle")
+                        "assets/images/ship_in_battle")
         for k,v in self.images['ship_in_battle'].items():
             self.images['ship_in_battle'][k] = pygame.transform.scale(v,
                                     (c.SHIP_SIZE_IN_PIXEL,
@@ -123,7 +124,7 @@ class Game():
 
         self.images['enemy_ship_in_battle'] = {}
         load_all_images(self.images['enemy_ship_in_battle'],
-                        "../../assets/images/ship_in_battle/enemy")
+                        "assets/images/ship_in_battle/enemy")
         for k,v in self.images['enemy_ship_in_battle'].items():
             self.images['enemy_ship_in_battle'][k] = pygame.transform.scale(v,
                                     (c.SHIP_SIZE_IN_PIXEL,
@@ -131,17 +132,17 @@ class Game():
 
         # world map grids
         self.images['world_map_grids'] = pygame.image.load\
-            ("../../assets/images/world_map/world_map_grids.png").convert_alpha()
+            (create_resource_path("assets/images/world_map/world_map_grids.png")).convert_alpha()
         # fonts
         self.font = pygame.font.SysFont("microsoftyaheimicrosoftyaheiui", c.FONT_SIZE)
 
     def _load_sound_effects(self):
         self.sounds = {}
-        load_all_sounds(self.sounds, f"../../assets/sounds/effect")
+        load_all_sounds(self.sounds, f"assets/sounds/effect")
 
     def _play_music(self):
         # pygame.mixer.music.load('../../assets/sounds/music/login.ogg')
-        pygame.mixer.music.load('../../assets/sounds/music/MAST IN THE MIST.mp3')
+        pygame.mixer.music.load(create_resource_path('assets/sounds/music/MAST IN THE MIST.mp3'))
         pygame.mixer.music.play()
 
     def update(self):
