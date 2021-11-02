@@ -26,6 +26,13 @@ from player_manager import PlayerManager
 # import from client
 from map_maker import MapMaker
 
+import pika
+import uuid
+import json
+import pickle
+
+sessions = {}
+
 class Echo(Protocol):
     """one server for each client"""
     def __init__(self, factory):
@@ -38,6 +45,10 @@ class Echo(Protocol):
         print("new connection!")
         # init data buffer
         self.dataBuffer = bytes()
+        self.sessionId = str(uuid.uuid4())
+        sessions[self.sessionId] = self
+
+        self.send("sessionId", [self.sessionId])
 
     def connectionLost(self, reason):
         print("connection lost!")
@@ -52,6 +63,15 @@ class Echo(Protocol):
             elif my_role.is_in_battle():
                 self.auto_fight_loop = LoopingCall(self.__auto_fight)
                 self.auto_fight_loop.start(10)
+
+    def load(self, id, nickname):
+        self.account = id
+
+        d = threads.deferToThread(self.factory.db.get_character_data, id, nickname)
+        d.addCallback(self.onRoleReceived)
+
+    def onRoleReceived(self, role):
+        server_packet_received.on_get_character_data_got_result(self, role)
 
     def _lost_conn_when_at_sea(self):
         my_role = self.my_role
@@ -84,7 +104,6 @@ class Echo(Protocol):
         print(f'logging role out. {self.my_role.name}')
         # set online to false
         account = self.account
-        d = threads.deferToThread(self.factory.db.set_online_to_false, account)
 
         # save role to DB
         if c.SAVE_ON_CONNECTION_LOST:
@@ -214,11 +233,34 @@ class EchoFactory(Factory):
         looping_task = task.LoopingCall(wind_wave_mgr.change, self.player_manager)
         looping_task.start(c.WIND_WAVE_CHANGE_INTERVAL)
 
-        # db
         self.db = Database()
+
+        threads.deferToThread(self.rabbitMqInit)
 
     def buildProtocol(self, addr):
         return Echo(self)
+
+    def rabbitMqInit(self):
+        self.mq_connection = pika.BlockingConnection(pika.ConnectionParameters(host=os.environ["RABBITMQ_HOST"]))
+        mq_channel = self.mq_connection.channel()
+
+        mq_channel.queue_declare(queue="LoginResult", auto_delete=True)
+        mq_channel.basic_qos(prefetch_count=1)
+
+        def oauthResultCallback(ch, method, properties, body):
+            message = json.loads(body)
+            session = message["session"]
+            id = message["address"]
+            nickname = message["name"]
+
+            if (session in sessions):
+                conn = sessions[session]
+                conn.load(id, nickname)
+
+            ch.basic_ack(delivery_tag=method.delivery_tag)
+
+        mq_channel.basic_consume("LoginResult", oauthResultCallback)
+        mq_channel.start_consuming()
 
 def main():
     # print?

@@ -34,6 +34,9 @@ def process_packet(self, pck_type, message_obj):
             func(list)
             print(role, func_name, func, list)
 
+def sessionId(self, message_obj):
+    self.sessionId = message_obj[0]
+
 # register responses
 def version_wrong(self, message_obj):
     msg = 'Please download the latest version! ' \

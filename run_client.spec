@@ -4,9 +4,9 @@ block_cipher = None
 
 
 a = Analysis(['run_client.pyw', 'code\\client\\game.py', 'code\\common\\protocol.py', 'code\\common\\role.py', 'code\\common\\constants.py'],
-             pathex=['F:\\P\\Python\\Games\\uw2ol'],
+             pathex=[],
              binaries=[],
-             datas=[],
+             datas=[('assets', 'assets')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],

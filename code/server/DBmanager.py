@@ -1,4 +1,3 @@
-import pymysql
 import pickle
 
 # add relative directory to python_path
@@ -12,49 +11,6 @@ from role import Mate
 import constants as c
 
 class Database:
-    def __init__(self):
-        self.db = pymysql.connect(host="127.0.0.1", user="root", password="dab9901025", database="py_test")
-        self.cursor = self.db.cursor()
-
-    # accounts table
-    def register(self, account, password):
-
-        # check if account already exists
-        sql_read = "SELECT * FROM accounts WHERE name = '{}'".format(account)
-        self.cursor.execute(sql_read)
-        rows = self.cursor.fetchall()
-
-        # if exists
-        if rows:
-            print("account already exists!" )
-            return False
-
-        # not exist
-        else:
-            sql_insert = "insert into accounts(name,pw) values('{}','{}')".format(account, password)
-            self.cursor.execute(sql_insert)
-            self.db.commit()
-            print("new account added!")
-            return True
-
-    def login(self, account, password):
-
-        # check if such a row exists
-        sql_read = "SELECT * FROM accounts WHERE name = '{}' and pw = '{}' and online = '0'".\
-            format(account, password)
-        print(sql_read)
-        self.cursor.execute(sql_read)
-        rows = self.cursor.fetchall()
-
-        # if exits
-        if rows:
-            id = rows[0][0]
-            return account
-        else:
-            print("account or password wrong!")
-            return False
-        pass
-
     # data table
     def create_character(self, account, character_name):
         # exists?
@@ -144,21 +100,14 @@ class Database:
         pickle.dump(default_role, open("data/save." + account, "wb"))
         print("new player created!")
 
-    def get_character_data(self, account):
+    def get_character_data(self, account, nickname):
         try:
-            player = pickle.load(open("data/save." + account, "rb"))
-
-            # set online to true
-            if c.SET_ONLINE_TO_TRUE_ON_LOGIN:
-                sql_update = "UPDATE accounts SET online = '1' WHERE name = '{}'".\
-                    format(account)
-                print(sql_update)
-                self.cursor.execute(sql_update)
-                self.db.commit()
-
-            return player
+            return pickle.load(open("data/save." + account, "rb"))
         except:
-            return False
+            if c.DEVELOPER_MODE_ON:
+                return self._make_developer_mode_role(account, nickname)
+            else:
+                return self._make_normal_role(account, nickname)
 
     def save_character_data(self, account, player):
 

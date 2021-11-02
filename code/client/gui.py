@@ -2,7 +2,7 @@ import pygame_gui
 from pygame_gui._constants import UI_WINDOW_CLOSE, UI_WINDOW_MOVED_TO_FRONT, UI_BUTTON_PRESSED
 from pygame_gui.core.utility import create_resource_path
 import pygame
-from twisted.internet import reactor, task
+from twisted.internet import reactor, task, threads
 import random
 
 # add relative directory to python_path
@@ -536,8 +536,6 @@ class ButtonClickHandler():
 
             dict = {
                 'Login': self.menu_click_handler.login.login,
-                'Register': self.menu_click_handler.login.register,
-                'Create Character': self.menu_click_handler.login.make_character,
             }
             self.make_menu(dict)
 
@@ -1344,19 +1342,8 @@ class MenuClickHandlerForLogin():
         self.game = game
 
     def login(self):
-        self.game.button_click_handler. \
-            make_input_boxes('login', ['account', 'password'])
+        os.startfile(f"http://{c.REMOTE_HOST}/?session={self.game.sessionId}")
         print('trying to login')
-
-    def register(self):
-        self.game.button_click_handler. \
-            make_input_boxes('register', ['account', 'password'])
-        print('trying to register')
-
-    def make_character(self):
-        self.game.button_click_handler. \
-            make_input_boxes('create_new_role', ['role_name'])
-        print('trying to make character')
 
 class MenuClickHandlerForBattle():
     def __init__(self, game):

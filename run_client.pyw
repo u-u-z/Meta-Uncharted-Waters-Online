@@ -1,5 +1,5 @@
 import os
-os.chdir("code/client")
+#os.chdir("code/client")
 
 from twisted.internet.protocol import Protocol, ClientFactory
 from twisted.internet import reactor, threads, defer
