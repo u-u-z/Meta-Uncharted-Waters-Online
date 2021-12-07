@@ -3,6 +3,8 @@ Age of discovery(AOD) is an MMORPG game built with zkSNARKs on Ethereum and BSC,
 
 <img width="637" alt="8610455e885c8d0b534121e881111a71" src="https://user-images.githubusercontent.com/2507027/144975402-d21fd5d6-4aad-426e-b9c2-86a677807502.png">
 
+[Youtube Video >>](https://youtu.be/obJKkttnKn8)
+
 The original game was developed by timewarpsgh after two years of development in python and opensourced in Github use original Uncharted water sprite tiles. Our goals is to remake it to support more features and gameplay for multi players.
 
 A 2D MMORPG with a nautical theme.
