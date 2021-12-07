@@ -1,7 +1,7 @@
 ## About
 Age of discovery(AOD) is an MMORPG game built with zkSNARKs on Ethereum and BSC, dealing with sailing and trading, themed around the Age of Discovery inspring by Uncharted Water. In the games, the player takes up the role of a captain (or commodore in some translations) and manages a seagoing fleet to participate in trades, privateering, treasure hunting, exploration, and plain piracy. The player can also explore into AI generated random world to discover infinity metaverse.
 
-![截屏2021-11-24 下午10.22.03.png](https://ssimg.frontenduse.top/article/2021/11/24/8610455e885c8d0b534121e881111a71.png)
+<img width="637" alt="8610455e885c8d0b534121e881111a71" src="https://user-images.githubusercontent.com/2507027/144975402-d21fd5d6-4aad-426e-b9c2-86a677807502.png">
 
 The original game was developed by timewarpsgh after two years of development in python and opensourced in Github use original Uncharted water sprite tiles. Our goals is to remake it to support more features and gameplay for multi players.
 
